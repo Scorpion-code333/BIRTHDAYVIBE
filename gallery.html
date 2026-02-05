@@ -1,0 +1,119 @@
+<!-- Memories -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* Memories */
+    body {
+       background:linear-gradient(rgba(0,0,0,0.6),
+          rgba(0,0,0,0.6)), url(013.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    min-height: 100vh;
+    color: rgb(0, 255, 51);
+    }
+    #pics {
+      background:linear-gradient(rgba(39, 13, 133, 0.6),
+          rgba(190, 4, 4, 0.6));
+      padding-left: 6px;
+      border-radius: 10px;
+    }
+    #memories .photo-gallery { display:flex; flex-wrap:wrap; justify-content:center; gap:20px; }
+    #memories .photo-gallery img { width:300px; height:370px; object-fit:cover; border-radius:15px; transition: transform 0.3s, box-shadow 0.3s; }
+    #memories .photo-gallery img:hover { transform:scale(1.1) rotate(2deg); box-shadow:0 10px 20px rgba(157, 18, 18, 0.2); }
+    
+    /* Scroll reveal base state */
+.photo {
+  opacity: 0;
+  transform: translateY(50px) scale(0.9);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+  transition-delay: calc(var(--i) * 0.1s);
+}
+
+.photo.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+
+    </style>
+ </head>
+ <body>
+  <audio id="bgMusic" loop>
+  <source src="kanye.mp3" type="audio/mpeg">
+</audio>
+
+    <section id="memories">
+    <div class="container">
+      <h2 id="pics">Life Chronicles in Frames🔥</h2>
+      <div class="photo-gallery">
+        <img class="photo" style="--i:0" src="DSC_2429.JPG" alt="Memory 1">
+        <img class="photo" style="--i:1" src="FFP_1021.JPG" alt="Memory 3">
+        <img class="photo" style="--i:2" src="FFP_54366.jpg" alt="Memory 2">
+        <img class="photo" style="--i:3" src="FFP_1058.JPG" alt="Memory 3">
+        <img class="photo" style="--i:4" src="FFP_1166.1.jpg" alt="Memory 3">
+        <img class="photo" style="--i:5" src="FFP_24022.jpg" alt="Memory 3">
+        <img class="photo" style="--i:6" src="FFP_21155.jpg" alt="Memory 3">
+        <img class="photo" style="--i:7" src="IMG_0065.jpeg" alt="Memory 3">
+        <img class="photo" style="--i:8" src="FFP_0980.JPG" alt="Memory 3">
+        <img class="photo" style="--i:9" src="DSC_34433.jpg" alt="Memory 3">
+        <img class="photo" style="--i:10" src="DSC_5623.jpg" alt="Memory 3">
+        <img class="photo" style="--i:11" src="FFP_53711.jpg" alt="Memory 3">
+        <img class="photo" style="--i:12" src="IMG_20240912_221646.jpg" alt="Memory 3">
+        <img class="photo" style="--i:10" src="FFP_2628c.jpg" alt="Memory 3">
+      </div>
+    </div>
+  </section> 
+  <script>
+  /* ===== GALLERY SCROLL ANIMATION ===== */
+  const photos = document.querySelectorAll('.photo');
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        } else {
+          entry.target.classList.remove('show');
+        }
+      });
+    },
+    {
+      threshold: 0.03
+    }
+  );
+
+  photos.forEach(photo => observer.observe(photo));
+
+
+  /* ===== BACKGROUND MUSIC ===== */
+  const music = document.getElementById('bgMusic');
+
+  function startMusic() {
+    music.currentTime = 20; // start at 20 seconds
+    music.play().catch(() => {});
+    window.removeEventListener('scroll', startMusic);
+    window.removeEventListener('click', startMusic);
+  }
+
+  // Attempt autoplay
+  music.currentTime = 20;
+  music.play().catch(() => {
+    // Fallback for browser restrictions
+    window.addEventListener('scroll', startMusic, { once: true });
+    window.addEventListener('click', startMusic, { once: true });
+  });
+</script>
+
+
+ </body>
+ </html>
+ 
+  

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bigday!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #fceabb, #f8b500);
+      color: #333;
+    }
+    .top-bar {
+      color: #ffffff;
+      font-family: 'Times New Roman', Times, serif;
+      position: relative;
+      display: flex;
+      margin-bottom: 0%;
+
+    }
+    h2 {
+      text-align: center;
+    }
+    section { padding: 20px 10px; }
+    .container { max-width: 1000px;
+  }
+
+    /* Hero */
+    #hero {
+      background:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(FFP_1021.JPG);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      color: #fff;
+      overflow: hidden;
+      min-height: 93vh;
+      padding-top: 0px;
+      padding-bottom: 0%;
+    }
+    #hero h1 { font-size:3rem; font-family: 'Times New Roman', Times, serif;
+    color: rgb(225, 255, 0); padding-top: 62%; animation: fadeInDown 2s ease forwards; }
+    #hero p { font-size: 1.15rem; font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: 900; animation: fadeInUp 2s ease forwards; 
+      position: absolute; bottom: 17%; }
+    .btn {
+      display: inline;
+      background: #074591;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 18px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-weight: 600;
+      transition: 0.3s ease;
+      position: absolute;
+      bottom: 10%;
+    }
+    .btn-hover {
+      background: #333;
+      transform: translateY(-2px);
+    }
+    .btn2 {
+      display: inline;
+      background: #074591;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-size: 18px;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-weight: 600;
+      transition: 0.3s ease;
+      position: absolute;
+      bottom: 10%;
+      right: 13px;
+    }
+    /* About */
+    #about { background:#fff7f0; text-align:center; }
+
+    /* Appreciation */
+    #appreciation { background:#e0f7fa;
+      background:linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)), url(IMG_1324.PNG);
+      background-size: cover;
+      background-position: center;
+      font-weight: 400;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+      font-size: 18px;
+      color: #c5d5fc;
+      min-height: 70vh; 
+      padding-top: 10px;
+    }
+
+    /* ===== Appreciation fade-in animation ===== */
+
+/* Initial hidden state */
+#appreciation {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+/* Visible state */
+#appreciation.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional bounce pop effect */
+#appreciation.visible {
+  animation: bounceFade 1.2s ease;
+}
+
+@keyframes bounceFade {
+  0% { transform: translateY(30px); }
+  70% { transform: translateY(-5px); }
+  100% { transform: translateY(0); }
+}
+
+    #thank {
+      font-weight: 600;
+      color: #0dff00;
+    }
+    #brackets {
+      color: red;
+      font-weight: 700;
+    }
+    .pesa {
+      margin-top: 60%;
+      margin-left: 5%;
+    }
+   .weka {
+     margin: 0;
+    
+    }
+    #no {
+      color: #36e206;
+      font-weight: 900;
+      margin: 0;
+    }
+    #app {
+      color: red;
+    }
+
+    /* Contact */
+    #contact { background:linear-gradient(rgba(0, 0, 0, 1),rgba(0, 121, 250, 0.759), rgba(0, 0, 0, 1));
+      background-size: cover; text-align:center; color: #fff7f0; font-family: 'Times New Roman', Times, serif; }
+    .contact-icons a { 
+      margin: 10px; font-size: larger; text-decoration:none; color:#3cff01; transition: transform 0.2s; }
+    .contact-icons a:hover { transform:scale(1.2); }
+
+    /* Footer */
+    footer { background: linear-gradient(rgba(0, 0, 0, 1)); text-align:center; padding:20px; color: #ff0000; }
+
+    /* Animations */
+    @keyframes fadeInDown { from {opacity:0; transform:translateY(-50px);} to {opacity:1; transform:translateY(0);} }
+    @keyframes fadeInUp { from {opacity:0; transform:translateY(50px);} to {opacity:1; transform:translateY(0);} }
+
+    /* Responsive */
+    @media screen and (max-width:600px){
+      #memories .photo-gallery img { width:100%; max-width:300px; }
+      #guestbook textarea { width:95%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero -->
+  <section id="hero">
+    <h2 class="top-bar">IAN @22🎊</h2>
+    <h1 id="wish"><span id="hbd">Happy Birthday🥳</span> </h1>
+    <p>Another year older, full of memories💙 Cheers to good, fun and
+       epic vibes that made this year special. Happy 22🎉 to me💪✨ </p>
+    <a href="wish.html" class="btn">Wish me🌟</a>
+    <a href="gallery.html" class="btn2">Take a look🌟</a>
+  </section>
+
+  <!-- Appreciation -->
+   <section id="appreciation">
+    <div class="container">
+      <h2 id="app">🎁 Appreciation🥂</h2>
+      <p>Habari zenu, habari zenu tenaa🥳, mko chonjo? Very nais. <span id="thank">THANK YOU</span>🙏 for the birthday love❤️ that fuel my heroics⚡. 
+      As I begin another orbit round the sun, may it be a year of joy🌸, baraka mingi✨<span id="brackets">(</span><i>BMW M4 😂</i><span id="brackets">)</span> and great adventures💥.
+      Asanteni sana <span id="brackets">(</span><i>in Uhuru's voice</i><span id="brackets">)</span> and all glory be to GOD🙏. </p>
+    </div>
+    <div class="pesa">
+    <h1 id="no">0757710188</h1>
+    <h3 class="weka">#wekakakitu😂✨</h3>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact">
+      <h2>📱Find Me</h2>
+      <div class="contact-icons">
+  <a href="https://www.instagram.com/sc_orp.ion?igsh=bnRpd3I4eXFyMzM4" target="_blank">
+    <i class="fa-brands fa-instagram"></i>
+  </a>
+
+  <a href="https://wa.me/254757710188" target="_blank">
+    <i class="fa-brands fa-whatsapp"></i>
+  </a>
+
+  <a href="https://x.com/Ian88Ke" target="_blank">
+    <i class="fa-brands fa-x-twitter"></i>
+  </a>
+
+  <a href="https://www.facebook.com/share/1Ap5UAbf1v/" target="_blank">
+    <i class="fa-brands fa-facebook"></i>
+  </a>
+</div>
+
+    </div>
+    
+  </section>
+
+  <!-- Footer -->
+  <footer>
+   <b>Ian❤️ <SPan id="year">@2026</SPan></b> 
+  </footer>
+
+  <!-- JS -->
+   <script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const appreciation = document.getElementById('appreciation');
+    setTimeout(() => {
+      appreciation.classList.add('visible'); // triggers fade-in
+    }, 500); // slight delay for smoother effect
+  });
+</script>
+
+</body>
+</html>

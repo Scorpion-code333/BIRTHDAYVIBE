@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Wish Wall</title>
+
+  <style>
+    body {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(1453579742.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      min-height: 100vh;
+      font-family: sans-serif;
+    }
+
+    #title { color: red; }
+
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #5dcc09;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      z-index: 10000;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    #guestbook { background:none; text-align:center; color: #fffbfb; }
+
+    #guestbook textarea {
+      width:80%;
+      max-width:500px;
+      padding:10px;
+      margin:10px 0;
+      border-radius:10px;
+      border:none;
+      font-size:1rem;
+      box-shadow:0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    #guestbook button {
+      padding:12px 25px;
+      font-size:1rem;
+      border-radius:10px;
+      border:none;
+      cursor:pointer;
+      background: linear-gradient(45deg, #ff6a6a, #744708);
+      color:white;
+      transition: transform 0.2s;
+      margin: 6px;
+    }
+
+    #guestbook button:hover { transform:scale(1.08); }
+
+    #wishes-wall {
+      height:300px;
+      overflow-y:auto;
+      border:2px solid #e9e2e4;
+      border-radius:15px;
+      padding:10px;
+      margin-top:20px;
+      background: none;
+    }
+
+    .wish {
+      background: #1a1d26;
+      padding:10px 15px;
+      border-radius:15px;
+      border:2px solid;
+      border-color: rgb(33, 94, 155);
+      box-shadow:0 2px 10px rgba(95, 67, 23, 0.15);
+      margin-bottom:10px;
+      display: flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+
+    @keyframes confettiFade {
+      0% { opacity: 0; transform: scale(0.5); }
+      20% { opacity: 1; transform: scale(1); }
+      80% { opacity: 1; }
+      100% { opacity: 0; transform: scale(0.8); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="guestbook">
+    <div class="container">
+      <h2 id="title">💌 Drop Your Birthday Wish!</h2>
+      <p>Your love makes my day brighter 🌟</p>
+
+      <textarea id="wishInput" rows="3" placeholder="Type your wish here…"></textarea><br>
+
+      <button id="submitWish">Send Wish 🎉</button>
+      <div id="wishes-wall"></div>
+    </div>
+  </section>
+
+  <div id="toast">🎉 Wish sent successfully! 💙</div>
+
+<script type="module">
+  // ===== FIREBASE IMPORTS =====
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+  import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp,
+    query,
+    orderBy,
+    onSnapshot
+  } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+  // ===== FIREBASE CONFIG (REAL ONE) =====
+  const firebaseConfig = {
+    apiKey: "AIzaSyDl6kys2SmpPVcJb6cijQYpCiOrSgZKFqI",
+    authDomain: "wishes-wall.firebaseapp.com",
+    projectId: "wishes-wall",
+    storageBucket: "wishes-wall.firebasestorage.app",
+    messagingSenderId: "707098737174",
+    appId: "1:707098737174:web:c27b662bcae4f2c6269337"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // ===== DOM =====
+  const submitBtn = document.getElementById("submitWish");
+  const wishInput = document.getElementById("wishInput");
+  const wishesWall = document.getElementById("wishes-wall");
+
+  // ===== FIRESTORE COLLECTION =====
+  const wishesRef = collection(db, "wishes");
+  const q = query(wishesRef, orderBy("timestamp", "asc"));
+
+  // ===== REALTIME DISPLAY =====
+  onSnapshot(q, (snapshot) => {
+    wishesWall.innerHTML = "";
+
+    snapshot.forEach((docSnap) => {
+      const wish = docSnap.data().message;
+
+      const div = document.createElement("div");
+      div.className = "wish";
+
+      const span = document.createElement("span");
+      span.textContent = wish;
+
+      div.appendChild(span);
+      wishesWall.appendChild(div);
+    });
+
+    // scroll to newest
+    wishesWall.scrollTop = wishesWall.scrollHeight;
+  });
+
+  // ===== SUBMIT WISH =====
+  submitBtn.addEventListener("click", async () => {
+    const wish = wishInput.value.trim();
+    if (!wish) return;
+
+    try {
+      await addDoc(wishesRef, {
+        message: wish,
+        timestamp: serverTimestamp()
+      });
+
+      wishInput.value = "";
+      confetti();
+      showToast();
+    } catch (e) {
+      console.error("Error adding wish:", e);
+      alert("Wish not saved. Check Firestore rules.");
+    }
+  });
+
+  // ===== TOAST =====
+  function showToast() {
+    const toast = document.getElementById("toast");
+    toast.classList.add("show");
+    setTimeout(() => toast.classList.remove("show"), 3000);
+  }
+
+  // ===== CONFETTI =====
+  function confetti() {
+    for (let i = 0; i < 100; i++) {
+      const div = document.createElement("div");
+      div.style.position = "fixed";
+      div.style.width = "12px";
+      div.style.height = "15px";
+      div.style.background = `hsl(${Math.random() * 360},80%,60%)`;
+      div.style.left = Math.random() * window.innerWidth + "px";
+      div.style.top = Math.random() * window.innerHeight + "px";
+      div.style.borderRadius = "50%";
+      div.style.zIndex = 9999;
+      div.style.pointerEvents = "none";
+      div.style.animation = "confettiFade 2s ease-in-out forwards";
+      document.body.appendChild(div);
+
+      setTimeout(() => div.remove(), 2000);
+    }
+  }
+</script>
+
+
+</body>
+</html>
